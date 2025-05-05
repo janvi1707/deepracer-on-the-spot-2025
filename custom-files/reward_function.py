@@ -1,32 +1,9 @@
-""" prev_steering_angle = None
 
-def reward_function(params):
-    '''
-    Example of rewarding the agent to follow center line
-    '''
-    global prev_steering_angle
-
-    # Read input parameters
-    track_width = params['track_width']
-    distance_from_center = params['distance_from_center']
-    speed=params['speed']
-    reward=0.0;
-    steering_angle = params['steering_angle']
-    if params['distance_from_center']> 0.5*(params['track_width']):
-        reward=1e-3
-    if params['is_crashed']:
-        reward=1e-3
-    
-    if prev_steering_angle is None:
-        angle_change=0
-    else:
-        angle_change = abs(steering_angle - prev_steering_angle)
-
-    reward=+speed**2 + 30*(params['progress']/(params['steps']+1));
-    if angle_change>25:
-        reward*=0.5
-    prev_steering_angle= params['steering_angle']
-    return float(reward) """
+'''
+Example 3: Prevent zig-zag in time trials
+This example incentivizes the agent to follow the center line but penalizes 
+with lower reward if it steers too much, which helps prevent zig-zag behavior.
+'''
 
 def reward_function(params):
     '''
@@ -61,5 +38,4 @@ def reward_function(params):
     if abs_steering > ABS_STEERING_THRESHOLD:
         distance_reward*= 0.8
 
-    return float(reward)
-    
+    return float(distance_reward)
